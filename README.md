@@ -12,7 +12,7 @@ PORT=8080\
 DB=mongodb://localhost:27017/roles_nd_permissions_crud_services\
 APP_SECRET=5a3ab7a7eeca5455337b25e6754f2fc311513709c686ee3efe311b3f3580bab4bd46bf3c055c55ce289782c8da3539c0d8d6ba7c53b360ee84c509d0d5b69e3e\
 ADMIN_EMAIL_ID=test@gmail.com\
-ADMIN_PASSWORD=Test@12345\
+ADMIN_PASSWORD=Test@12345
 
 ## node version
 14.19.1
