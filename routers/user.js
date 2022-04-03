@@ -2,7 +2,7 @@ const route = require('express').Router()
 
 const createUser = require('../controllers/user/create')
 const readUser = require('../controllers/user/read')
-// const editUser = require('../controllers/user/edit')
+const editUser = require('../controllers/user/edit')
 const deleteUser = require('../controllers/user/delete')
 
 const multerErrorHandler = require('../middlewares/multerErrorHandler')
@@ -60,13 +60,13 @@ route.post('/create', verifyAccess(PERMISSIONS.create)  , multerErrorHandler(upl
     }
 ])), createUser)
 
-// route.put('/:userId/edit', multerErrorHandler(upload.fields([
-//     {
-//         name: "profile",
-//         maxCount : 1
-//     }
-// ])), editUser)
+route.put('/:userId/edit', verifyAccess(PERMISSIONS.update), multerErrorHandler(upload.fields([
+    {
+        name: "profile_pic",
+        maxCount : 1
+    }
+])), editUser)
 
-route.delete('/:userId/delete', deleteUser)
+route.delete('/:userId/delete', verifyAccess(PERMISSIONS.delete), deleteUser)
 
 module.exports = route

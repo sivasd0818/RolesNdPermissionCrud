@@ -1,6 +1,7 @@
 const User = require('../../models/user')
 const {isEmpty} = require('lodash')
 const logger = require('../../utils/logger')
+const {removeLocalAsset} = require('../../utils/utils')
 
 const TAG = 'controllers/user/delete'
 
@@ -27,6 +28,10 @@ const deleteUser = async (req, res) => {
 
         //role deletion
         const result = await User.deleteOne({_id: req.params.userId})
+
+        if(!isEmpty(existingUserDoc.pic)){
+            await removeLocalAsset(`${existingUserDoc.pic.destination}/${existingUserDoc.pic.filename}`)
+        }
 
         res.status(200).send({
             success: true,

@@ -3,7 +3,7 @@ const Role = require('../models/role')
 const {isEmpty} = require('lodash')
 const {ADMIN_EMAIL, ADMIN_PASSWORD} = require('../config')()
 const { PERMISSIONS } = require('./constants')
-const logger = require('./logger')
+const fs = require('fs')
 const bcrypt = require('bcryptjs')
 
 const TAG = "utils"
@@ -84,10 +84,22 @@ function arraysEqual(arr1, arr2) {
     return (arr1.length === arr2.length) && arr1.every((element) => Boolean(arr2.includes(element)))
 }
 
+function removeLocalAsset(path) {
+    return new Promise((resolve, reject) => {
+        if(fs.existsSync(path)){
+            fs.unlinkSync(path)
+            resolve(`${path} is deleted.`)
+        } else {
+            resolve(`file of ${path} not found`)
+        }
+    })
+}
+
 module.exports = {
     createDefaultAdmin,
     hashPassword,
     passwordCheck,
     validatePermissions,
-    arraysEqual
+    arraysEqual,
+    removeLocalAsset
 }

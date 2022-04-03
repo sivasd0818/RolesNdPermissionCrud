@@ -2,7 +2,7 @@ const Role = require('../../models/role')
 const User = require('../../models/user')
 const {isEmpty} = require('lodash')
 const logger = require('../../utils/logger')
-const {validatePermissions, hashPassword} = require('../../utils/utils')
+const {hashPassword} = require('../../utils/utils')
 
 const TAG = 'controllers/user/create'
 
@@ -26,6 +26,16 @@ const createUser = async (req, res) => {
             res.status(400).send({
                 success: false,
                 errorData: 'EmailId, password and role are not found.'
+            })
+            return
+        }
+
+        // check for user already present
+        const isUserExists = await User.exists({emailId: requestBody.emailId})
+        if(isUserExists){
+            res.status(409).send({
+                success: false,
+                errorData: 'User with given emailId already exists.'
             })
             return
         }
@@ -78,6 +88,7 @@ const createUser = async (req, res) => {
         }
 
         const newUserDoc = await newUserObj.save()
+        newUserDoc.password = null
 
         res.status(201).send({success: true, data: newUserDoc})
 
