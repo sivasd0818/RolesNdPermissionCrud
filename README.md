@@ -29,3 +29,6 @@ ADMIN_PASSWORD=Test@12345
 5.Role based with permission described api access
 6.Jwt authorization
 7.One admin is maintained and which created by default
+
+# postman collection
+https://www.getpostman.com/collections/557f479d06ec4a450c99
